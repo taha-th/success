@@ -17,9 +17,6 @@ jobs:
           name: |  
           command: mkdir staticdata
       - run:
-          name: |
-          command: npm config set legacy-peer-deps true
-      - run:
           name: submodules
           command: 'git submodule update --init'
       - run:
