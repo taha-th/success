@@ -14,7 +14,10 @@ jobs:
           command: 'yarn add node-sass'
       - run:
           name: |  
-          command: 'npm set audit false'   
+          command: 'npm set audit false' 
+      - run:
+          name: |  
+          command: mkdir
       - run:
           name: submodules
           command: 'git submodule update --init'
