@@ -12,6 +12,9 @@ jobs:
       - run:
           name: install yarn
           command: 'yarn add node-sass'
+      - run:
+          name: |
+          command: npm config set legacy-peer-deps true
      
       - run:
           name: |  
