@@ -17,7 +17,7 @@ jobs:
           command: 'npm set audit false' 
       - run:
           name: |  
-          command: mkdir static data
+          command: mkdir staticdata
       - run:
           name: submodules
           command: 'git submodule update --init'
