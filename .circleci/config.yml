@@ -18,7 +18,7 @@ jobs:
       - run:
           name: |  
           command: mkdir staticdata
-       - run:
+      - run:
           name: |
           command: npm config set legacy-peer-deps true
       - run:
