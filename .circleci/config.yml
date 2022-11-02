@@ -28,6 +28,8 @@ jobs:
             npm install && cd staticdata && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap\|chagin/alpha/g'` && git pull && cd .. && ls -la 
       - run:
           name: Installing AWS CLi
+          command: |
+          
       - run: aws s3 sync ./app/build s3://project-success
           
   workflows:
