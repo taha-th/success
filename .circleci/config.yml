@@ -29,4 +29,11 @@ jobs:
       - run:
           name: |
           command: aws s3 sync ./app/build s3://project-success
+          
+  workflows:
+    version: 2
+    execute_bulk: 
+      jobs:
+      - build:
+      
       
