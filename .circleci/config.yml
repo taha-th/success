@@ -29,10 +29,11 @@ jobs:
       - run:
           name: Installing AWS CLi
           command: |
-          
-      - run:
-          name: |
-          command: aws s3 sync ./app/build s3://project-success
+            sudo apt-get update
+            sudo apt install python3-pip
+            sudo pip3 install awsebci --upgrade
+       - run: cd ./app && npm install && npm run build
+       - run: aws s3 sync ./app/build s3://project-success
           
   workflows:
     version: 2
