@@ -30,7 +30,7 @@ jobs:
           name: |
           command: aws s3 sync ./app/build s3://project-success
 
-jobs:
+
   verify-deployment:
     executor: aws-cli/default
     steps:
