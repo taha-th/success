@@ -1,5 +1,10 @@
 version: 2
 
+orbs:
+  aws-ecr: circleci/aws-ecr@8.1.2 
+  aws-ecs: circleci/aws-ecs@3.2.0
+  aws-cli: circleci/aws-cli@3.1.1 
+
 jobs:
   build:
     docker:
@@ -29,11 +34,6 @@ jobs:
       - run: 
           name: |
           command: aws s3 sync ./app/build s3://project-success
-
-orbs:
-  aws-ecr: circleci/aws-ecr@8.1.2 
-  aws-ecs: circleci/aws-ecs@3.2.0
-  aws-cli: circleci/aws-cli@3.1.1 # use the AWS CLI orb
 
 jobs:
   verify-deployment:
