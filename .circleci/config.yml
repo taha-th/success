@@ -30,12 +30,14 @@ jobs:
           name: Installing AWS CLi
           command: |
           
-      - run: aws s3 sync ./app/build s3://project-success
+      - run: 
+          name: |
+          command: aws s3 sync ./app/build s3://project-success
           
   workflows:
     version: 2
-    execute_bulk: 
+    node-tests:
       jobs:
-      - build:
+      - test
       
       
