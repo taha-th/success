@@ -1,6 +1,5 @@
-version: 2.1
-
-jobs:
+version: 2
+jobs: 
   build:
     docker:
       - image: circleci/node:16.4.1
@@ -13,32 +12,64 @@ jobs:
           name: install yarn
           command: 'yarn add node-sass'
       - run:
+          name: |  
+          command: 'npm set audit false'
+      - run:
           name: |
           command: npm config set legacy-peer-deps true
-     
-      - run:
-          name: |  
-          command: mkdir staticdata
       - run:
           name: submodules
           command: 'git submodule update --init'
       - run:
           name: install
           command: |
-            npm install && cd staticdata && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap\|chagin/alpha/g'` && git pull && cd .. && ls -la 
-      - run: 
+           npm install && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap\|chagin/alpha/g'` && git pull && cd .. && ls -la
+      - run:
           name: |
-          command: aws s3 sync ./app/build s3://project-success
-
-
-  verify-deployment:
-    executor: aws-cli/default
+          command: yarn add -D webpack-cli
+      - run:    
+          name: deploy
+          command: |
+            NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js -- mode production && sudo apt-get install awscli && ls -la dist && ./deploy.sh
+  test:
+    docker:
+      - image: circleci/node:16.4.1
     steps:
-      - aws-cli/install
-      - aws-cli/setup:
-          aws-access-key-id: AWS_SECRET_ACCESS_KEY
-          aws-region: AWS_DEFAULT_REGION
-          aws-secret-access-key: AWS_DEFAULT_REGION
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - run:
+          name: install yarn
+          command: 'yarn add node-sass'
+      - run:
+          name: |  
+          command: 'npm set audit false'
+      - run:
+          name: |
+          command: npm config set legacy-peer-deps true
+      - run:
+          name: submodules
+          command: 'git submodule update --init'
+      - run:
+          name: install
+          command: |
+           npm install && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap\|chagin/alpha/g'` && git pull && cd .. && ls -la
+      - run:
+          name: |
+          command: yarn add -D webpack-cli
+      - run:    
+          name: deploy
+          command: |
+            NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js -- mode production && sudo apt-get install awscli && ls -la dist && ./deploy.sh
+  workflows:
+    build_and_test:
+      jobs:
+      - build
+      - test:
+         requires:
+           -build
+  
      
 
 
