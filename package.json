@@ -7,7 +7,6 @@
     "start": "NODE_ENV=development webpack-dev-server",
     "build": "NODE_ENV=production webpack -p",
     "stats": "NODE_ENV=production webpack --profile --json >stats.json",
-    "start": "webpack-dev-server -d --config webpack.dev.config.js --content-base public/ --progress --colors",
     "analyzer": "NODE_ENV=analyze webpack",
     "webpack_analyzer": "webpack --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
     "lint": "jshint src/**/*.js",
